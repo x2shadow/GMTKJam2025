@@ -52,7 +52,7 @@ public class DialogueRunner : MonoBehaviour
             yield return new WaitUntil(() => skipPressed);
             
             playerUI.Hide();
-            brotherUI.Hide();
+            //brotherUI.Hide();
         }
 
         // Отписываемся от события Click после завершения диалога

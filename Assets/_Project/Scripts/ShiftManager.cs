@@ -7,12 +7,15 @@ public class ShiftManager : MonoBehaviour
 {
     public int modulesPerShift = 3;
     public int totalShifts = 4;
-    private int modulesDelivered = 0;
-    private int currentShift = 1;
+
+    [Header("Текущая смена")]
+    public int currentShift = 1;
+    public int modulesDelivered = 0;
 
     public static event Action OnModuleDelivered;
     public static event Action OnShiftCompleted;
-
+    public static event Action OnNewShiftStarted;
+    
     private void OnEnable()
     {
         OnModuleDelivered += HandleModuleDelivered;
@@ -20,6 +23,11 @@ public class ShiftManager : MonoBehaviour
     private void OnDisable()
     {
         OnModuleDelivered -= HandleModuleDelivered;
+    }
+
+    public static void NotifyModuleDelivered()
+    {
+        OnModuleDelivered?.Invoke();
     }
 
     private void HandleModuleDelivered()
@@ -37,6 +45,7 @@ public class ShiftManager : MonoBehaviour
         {
             currentShift++;
             modulesDelivered = 0;
+            OnNewShiftStarted?.Invoke();
             // Тут можно показать UI «Смена X началась»
         }
         else

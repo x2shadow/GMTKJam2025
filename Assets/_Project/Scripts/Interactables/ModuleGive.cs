@@ -74,6 +74,9 @@ public class ModuleGive : MonoBehaviour, IInteractable
         player.HeldModule.CurrentState = ModuleController.State.InHand;
         player.HeldModule = null;
 
+        // Триггерим событие сдачи
+        ShiftManager.NotifyModuleDelivered();
+
         // Делаем ресет модулей
         moduleTake.Reset();
         table.Reset();

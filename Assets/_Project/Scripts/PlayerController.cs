@@ -11,17 +11,14 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 moveInput;
     private Vector2 lookInput;
-    
+
     private CharacterController characterController;
     //public CinemachineVirtualCamera playerCamera;
     public Camera playerCamera;
     private float xRotation = 0f;
-    
+
     [HideInInspector]
     public InputActions inputActions;
-
-    [Header("Дебаг удалить")]
-    public EffectController effectController;
 
     [Header("Диалог")]
     public bool isDialogueActive = false;
@@ -33,10 +30,17 @@ public class PlayerController : MonoBehaviour
     public GameObject invisibleStartWall2;
 
     [Header("Пауза")]
-    [SerializeField] private GameObject pauseCanvas; 
+    [SerializeField] private GameObject pauseCanvas;
     private bool isPaused = false;
 
     private bool isInputBlocked = false;
+
+    // Для взаимодействия с объектами
+    private IInteractable currentInteractable;
+
+    // Для хранения взятого модуля
+    [HideInInspector]
+    public ModuleController HeldModule { get; set; }
 
     private void Awake()
     {
@@ -94,11 +98,11 @@ public class PlayerController : MonoBehaviour
         // Движение персонажа
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
         characterController.Move(move * moveSpeed * Time.deltaTime);
-        
+
         // Обработка обзора (поворот камеры)
         float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
         float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
-        
+
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
@@ -111,18 +115,18 @@ public class PlayerController : MonoBehaviour
         SetInputBlocked(false);
         moveInput = Vector2.zero;
 
-        if (index == 1) 
+        if (index == 1)
         {
             invisibleStartWall.SetActive(false);
             //firstDialogueHappened = true; 
             //dialogueUI.ShowTutorialDialogue("Press F to throw the flare that drives away the darkness");
         }
 
-        if (index == 2) 
+        if (index == 2)
         {
             dialogueTarget = null;
             nextPartTrigger1.SetActive(true);
-            effectController.TriggerHitEffects();
+            //effectController.TriggerHitEffects();
             AudioManager.Instance.PlayPlacebo();
         }
 
@@ -197,6 +201,9 @@ public class PlayerController : MonoBehaviour
         //effectController.TriggerHitEffects();
         //Debug.Log("Interact");
         //dialogueUI.ShowPlayerDialogue("Interact pressed");
+
+        // Вызываем взаимодействие с текущим объектом
+        currentInteractable?.Interact(this);
     }
 
     public void SetInputBlocked(bool blocked)
@@ -213,5 +220,21 @@ public class PlayerController : MonoBehaviour
     public void SetInputBlocked2(bool blocked)
     {
         isInputBlocked = blocked;
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        // Проверяем, реализует ли объект IInteractable
+        var interactable = other.GetComponent<IInteractable>();
+        if (interactable != null)
+            currentInteractable = interactable;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Очищаем ссылку, когда игрок уходит из зоны
+        var interactable = other.GetComponent<IInteractable>();
+        if (interactable != null && currentInteractable == interactable)
+            currentInteractable = null;
     }
 }

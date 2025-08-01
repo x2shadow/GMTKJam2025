@@ -5,23 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class FadeOut : MonoBehaviour
 {
-    public CanvasGroup canvasGroup;
+    CanvasGroup canvasGroup;
 
     [Tooltip("Скорость затухания (секунд)")]
     public float fadeDuration = 1f;
 
-    public string nextSceneName;
+        private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    public void Start()
+    {
+        StartFadeOut();
+    }
+    
+    public void StartFadeOut()
+    {
+        canvasGroup.alpha = 0f;
+        StartCoroutine(FadeOutEffect());
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        if (nextSceneName == "Intro2")
-        {
-            StartCoroutine(Part2Music());
-        }
-        else
-        {
-            StartCoroutine(FadeOutEffect());   
-        }
+        //StartCoroutine(Part2Music());
+        StartCoroutine(FadeOutEffect());   
     }
 
     private IEnumerator Part2Music()
@@ -32,10 +40,6 @@ public class FadeOut : MonoBehaviour
         AudioManager.Instance.PlayAmbient();
     }
 
-    public void StartFadeOut()
-    {
-        StartCoroutine(FadeOutEffect());   
-    }
 
     private IEnumerator FadeOutEffect()
     {
@@ -47,9 +51,5 @@ public class FadeOut : MonoBehaviour
             yield return null;
         }
         canvasGroup.alpha = 1f;
-
-        // Когда экран полностью чёрный — загружаем новую сцену
-        if (!string.IsNullOrEmpty(nextSceneName))
-            SceneManager.LoadScene(nextSceneName);
     }
 }

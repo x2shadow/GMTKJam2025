@@ -21,6 +21,7 @@ public class ShiftManager : MonoBehaviour
     public DialogueRunner dialogueRunner;
     public DialogueScript dialogue2;
     public DialogueScript dialogue3;
+    public GameObject     dialogueTrigger4;
     public DialogueScript dialogue5;
 
     private void OnEnable()
@@ -70,6 +71,7 @@ public class ShiftManager : MonoBehaviour
         {
             currentShift++;
             modulesDelivered = 0;
+            if (currentShift == 2) dialogueTrigger4.SetActive(true);
             OnNewShiftStarted?.Invoke();
             // Тут можно показать UI «Смена X началась»
         }

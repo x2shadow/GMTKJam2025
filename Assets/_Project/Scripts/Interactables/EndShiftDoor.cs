@@ -43,6 +43,7 @@ public class EndShiftDoor : MonoBehaviour, IInteractable
         {
             shiftManager.CompleteShift();
             Debug.Log("Смена закончена!");
+            promptUI.SetActive(false);
         }
         else Debug.Log("Смена не закончена");
     }

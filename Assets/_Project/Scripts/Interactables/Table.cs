@@ -6,6 +6,7 @@ public class Table : MonoBehaviour, IInteractable
 {
     [Tooltip("UI-подсказка 'Взять модуль'")]
     public GameObject promptUI;
+    //public Text promptText;
 
     [Tooltip("Слот в камере, в который нужно поместить модуль")]
     public Transform tableSlot;
@@ -17,20 +18,47 @@ public class Table : MonoBehaviour, IInteractable
 
     public ModuleGive moduleGive;
 
-    private bool hasModule = false;
+    private bool placedOnTable = false;
 
-    private void OnTriggerEnter(Collider other) { if (promptUI != null && !hasModule) promptUI.SetActive(true); }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (promptUI == null) return;
+        var player = other.GetComponent<PlayerController>();
+        if (player == null) return;
+
+        var module = player.HeldModule;
+        if (module == null) return;             // Нет модуля — не показываем
+        if (module.CurrentState == ModuleController.State.InHand && !placedOnTable)
+        {
+            ShowPrompt("Положить модуль");
+        }
+        else if (module.CurrentState == ModuleController.State.ChipTaken)
+        {
+            ShowPrompt("Вставить чип");
+        }
+        else if (module.CurrentState == ModuleController.State.ChipInserted)
+        {
+            ShowPrompt("Паять проводку");
+        }
+    }
+
+    private void ShowPrompt(string text)
+    {
+        //promptText.text = text;
+        promptUI.SetActive(true);
+    }
+
     private void OnTriggerExit(Collider other) { if (promptUI != null) promptUI.SetActive(false); }
 
     public void Interact(PlayerController player)
     {
         var module = player.HeldModule;
 
-        if (module?.CurrentState == ModuleController.State.InHand)
+        if (module?.CurrentState == ModuleController.State.InHand && !placedOnTable)
         {
             module?.PlaceOnTable();
 
-            //hasModule = true;
+            placedOnTable = true;
             promptUI?.SetActive(false);
             Debug.Log("Модуль на столе!");
 
@@ -43,7 +71,6 @@ public class Table : MonoBehaviour, IInteractable
         {
             module?.InsertChip();
 
-            //hasModule = true;
             promptUI?.SetActive(false);
             Debug.Log("Чип вставлен!");
 
@@ -56,7 +83,7 @@ public class Table : MonoBehaviour, IInteractable
         {
             module?.CompleteWiring();
 
-            hasModule = true;
+            placedOnTable = true;
             promptUI?.SetActive(false);
             Debug.Log("Модуль готов!");
 
@@ -72,6 +99,6 @@ public class Table : MonoBehaviour, IInteractable
     
     public void Reset()
     {
-        hasModule = false;   
+        placedOnTable = false;   
     }
 }

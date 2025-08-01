@@ -16,15 +16,28 @@ public class ChipTake : MonoBehaviour, IInteractable
 
     private bool hasModule = false;
 
-    private void OnTriggerEnter(Collider other) { if (promptUI != null && !hasModule) promptUI.SetActive(true); }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (promptUI == null) return;
+        var player = other.GetComponent<PlayerController>();
+        if (player == null) return;
+
+        var module = player.HeldModule;
+        if (module == null) return;             // Нет модуля — не показываем
+        if (module.CurrentState == ModuleController.State.PlacedOnTable)
+        {
+            promptUI.SetActive(true);
+        }
+    }
     private void OnTriggerExit(Collider other) { if (promptUI != null) promptUI.SetActive(false); }
 
     public void Interact(PlayerController player)
     {
         var module = player.HeldModule;
+        if (module?.CurrentState != ModuleController.State.PlacedOnTable) return;
         module?.TakeChip();
 
-        hasModule = true;
+        //hasModule = true;
         promptUI?.SetActive(false);
         Debug.Log("Взят чип!");
 

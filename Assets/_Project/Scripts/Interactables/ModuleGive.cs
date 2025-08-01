@@ -30,33 +30,29 @@ public class ModuleGive : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter(Collider other)
     {
-        // Ждём, что PlayerInteraction или PlayerController пометит его как игрока
-        if (hasModule) return;
-        if (other.GetComponent<PlayerController>() != null)
+        if (promptUI == null) return;
+        var player = other.GetComponent<PlayerController>();
+        if (player == null) return;
+
+        var module = player.HeldModule;
+        if (module == null) return;             // Нет модуля — не показываем
+        if (module.CurrentState == ModuleController.State.WiringDone)
         {
-            inRange = true;
-            if (promptUI != null)
-                promptUI.SetActive(true);
+            promptUI.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<PlayerController>() != null)
-        {
-            inRange = false;
-            if (promptUI != null)
-                promptUI.SetActive(false);
-        }
+        if (promptUI != null) promptUI.SetActive(false);
     }
 
     // Этот метод будет вызван извне, когда игрок нажмёт E
     public void Interact(PlayerController player)
     {
-        if (!inRange || hasModule)
-            return;
+        if (module.GetComponent<ModuleController>().CurrentState
+            != ModuleController.State.WiringDone) return;
 
-        hasModule = true;
         promptUI?.SetActive(false);
         Debug.Log("Модуль сдан!");
 

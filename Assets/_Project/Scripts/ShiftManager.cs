@@ -21,6 +21,7 @@ public class ShiftManager : MonoBehaviour
     public DialogueRunner dialogueRunner;
     public DialogueScript dialogue2;
     public DialogueScript dialogue3;
+    public DialogueScript dialogue5;
 
     private void OnEnable()
     {
@@ -56,6 +57,10 @@ public class ShiftManager : MonoBehaviour
         else if (currentShift == 1 && modulesDelivered == 3)
         {
             dialogueRunner.StartDialogue(dialogue3, 0);
+        }
+        else if (currentShift == 2 && modulesDelivered == 2)
+        {
+            dialogueRunner.StartDialogue(dialogue5, 0);
         }
     }
 

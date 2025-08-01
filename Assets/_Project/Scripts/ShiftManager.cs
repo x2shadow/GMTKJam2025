@@ -17,6 +17,10 @@ public class ShiftManager : MonoBehaviour
     public static event Action OnNewShiftStarted;
     public static event Action OnLastShiftStarted;
 
+    [Header("Ссылки для запуска диалогов")]
+    public DialogueRunner dialogueRunner;
+    public DialogueScript dialogue2;
+
     private void OnEnable()
     {
         OnModuleDelivered += HandleModuleDelivered;
@@ -33,10 +37,20 @@ public class ShiftManager : MonoBehaviour
 
     private void HandleModuleDelivered()
     {
+        HandleStory();
+
         modulesDelivered++;
         if (modulesDelivered >= modulesPerShift)
         {
             OnShiftCompleted?.Invoke();
+        }
+    }
+
+    public void HandleStory()
+    {
+        if (currentShift == 2 && modulesDelivered == 0)
+        {
+            dialogueRunner.StartDialogue(dialogue2, 0);
         }
     }
 

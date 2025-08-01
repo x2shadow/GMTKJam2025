@@ -22,11 +22,10 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
-    private void StartDialogue()
+    public void StartDialogue()
     {
         if (dialogueRunner != null && dialogueScript != null)
         {
-            player.isDialogueActive = true;
             dialogueRunner.StartDialogue(dialogueScript, player, dialogueIndex);
         }
         else

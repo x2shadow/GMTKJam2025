@@ -34,7 +34,7 @@ public class EndShiftDoor : MonoBehaviour, IInteractable
     void StartLastShift()
     {
         canExit = false;
-        fade.StartFadeOutIn();
+        fade.StartLastFadeOutIn();
     }
 
     public void Interact(PlayerController player)

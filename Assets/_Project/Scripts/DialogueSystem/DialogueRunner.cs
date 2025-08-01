@@ -5,14 +5,23 @@ using UnityEngine.InputSystem;
 public class DialogueRunner : MonoBehaviour
 {
     public DialogueScriptUI playerUI;
-    public DialogueScriptUI brotherUI;
+    public DialogueScriptUI oldOneUI;
 
-    PlayerController player;
+    public PlayerController player;
     
     bool skipPressed = false;
 
     public void StartDialogue(DialogueScript script, PlayerController player, int index)
     {
+        player.isDialogueActive = true;
+        // Подписываемся на событие Skip
+        player.inputActions.Player.Click.performed += OnClick;
+        StartCoroutine(RunDialogue2(script, player, index));
+    }
+
+    public void StartDialogue(DialogueScript script, int index)
+    {
+        player.isDialogueActive = true;
         // Подписываемся на событие Skip
         player.inputActions.Player.Click.performed += OnClick;
         StartCoroutine(RunDialogue2(script, player, index));
@@ -25,12 +34,12 @@ public class DialogueRunner : MonoBehaviour
             if (line.speaker == DialogueLine.Speaker.Player)
                 playerUI.Show(line.text);
             else
-                brotherUI.Show(line.text);
+                oldOneUI.Show(line.text);
 
             yield return new WaitForSeconds(line.duration);
 
             playerUI.Hide();
-            brotherUI.Hide();
+            oldOneUI.Hide();
         }
 
         player.EndDialogue(index);
@@ -46,13 +55,13 @@ public class DialogueRunner : MonoBehaviour
             if (line.speaker == DialogueLine.Speaker.Player)
                 playerUI.Show(line.text);
             else
-                brotherUI.Show(line.text);
+                oldOneUI.Show(line.text);
 
             // Вместо ожидания по времени ждём нажатия ЛКМ (Skip)
             yield return new WaitUntil(() => skipPressed);
             
             playerUI.Hide();
-            //brotherUI.Hide();
+            oldOneUI.Hide();
         }
 
         // Отписываемся от события Click после завершения диалога

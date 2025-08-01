@@ -20,6 +20,7 @@ public class ShiftManager : MonoBehaviour
     [Header("Ссылки для запуска диалогов")]
     public DialogueRunner dialogueRunner;
     public DialogueScript dialogue2;
+    public DialogueScript dialogue3;
 
     private void OnEnable()
     {
@@ -37,20 +38,24 @@ public class ShiftManager : MonoBehaviour
 
     private void HandleModuleDelivered()
     {
-        HandleStory();
-
         modulesDelivered++;
         if (modulesDelivered >= modulesPerShift)
         {
             OnShiftCompleted?.Invoke();
         }
+
+        HandleStory();
     }
 
     public void HandleStory()
     {
-        if (currentShift == 2 && modulesDelivered == 0)
+        if (currentShift == 1 && modulesDelivered == 1)
         {
             dialogueRunner.StartDialogue(dialogue2, 0);
+        }
+        else if (currentShift == 1 && modulesDelivered == 3)
+        {
+            dialogueRunner.StartDialogue(dialogue3, 0);
         }
     }
 

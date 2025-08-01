@@ -753,6 +753,7 @@ MonoBehaviour:
   modulesDelivered: 0
   dialogueRunner: {fileID: 1818678475}
   dialogue2: {fileID: 11400000, guid: 2b2f88bb8ec82494a9fa3f98e365742d, type: 2}
+  dialogue3: {fileID: 11400000, guid: 27cb0168c73156c4d83ecd7f0e060361, type: 2}
 --- !u!4 &296116829
 Transform:
   m_ObjectHideFlags: 0

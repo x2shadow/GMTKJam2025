@@ -6,6 +6,7 @@ public class EndShiftDoor : MonoBehaviour, IInteractable
     public GameObject promptUI;
 
     public ShiftManager shiftManager;
+    public FadeIn fade;
     private bool canExit = false;
 
     private void OnTriggerEnter(Collider other) { if (promptUI != null && canExit) promptUI.SetActive(true); }
@@ -13,13 +14,27 @@ public class EndShiftDoor : MonoBehaviour, IInteractable
 
     private void OnEnable()
     {
-        ShiftManager.OnShiftCompleted  += () => canExit = true;
-        ShiftManager.OnNewShiftStarted += () => canExit = false;
+        ShiftManager.OnShiftCompleted   += () => canExit = true;
+        ShiftManager.OnNewShiftStarted  += StartNewShift;
+        ShiftManager.OnLastShiftStarted += StartLastShift;
     }
     private void OnDisable()
     {
-        ShiftManager.OnShiftCompleted  -= () => canExit = true;
-        ShiftManager.OnNewShiftStarted += () => canExit = false;
+        ShiftManager.OnShiftCompleted   -= () => canExit = true;
+        ShiftManager.OnNewShiftStarted  -= StartNewShift;
+        ShiftManager.OnLastShiftStarted -= StartLastShift;
+    }
+
+    void StartNewShift()
+    {
+        canExit = false;
+        fade.StartFadeOutIn();
+    }
+
+    void StartLastShift()
+    {
+        canExit = false;
+        fade.StartFadeOutIn();
     }
 
     public void Interact(PlayerController player)

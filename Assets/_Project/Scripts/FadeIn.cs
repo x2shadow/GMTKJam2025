@@ -8,8 +8,11 @@ public class FadeIn : MonoBehaviour
 
     [Tooltip("Скорость затухания (секунд)")]
     public float fadeDuration = 1f;
+    public float pauseDuration = 2f;
 
     public bool startFadeIn = true;
+
+    public PlayerController playerController;
 
     private void Awake()
     {
@@ -57,5 +60,49 @@ public class FadeIn : MonoBehaviour
             yield return null;
         }
         canvasGroup.alpha = 1f;
+    }
+
+    public void StartFadeOutIn()
+    {
+        StartCoroutine(FadeOutInRoutine(pauseDuration));
+    }
+
+    private IEnumerator FadeOutInRoutine(float pauseDuration)
+    {
+        playerController.SetInputBlocked(true);
+
+        // Начинаем затемнение
+        yield return StartCoroutine(FadeOutEffect());
+
+        // Небольшая пауза, пока экран затемнён
+        yield return new WaitForSeconds(pauseDuration);
+
+        // Затем начинаем осветление
+        yield return StartCoroutine(FadeInEffect());
+
+        playerController.SetInputBlocked(false);
+    }
+
+    public void StartLastFadeOutIn()
+    {
+        StartCoroutine(LastFadeOutInRoutine(pauseDuration));
+    }
+
+    private IEnumerator LastFadeOutInRoutine(float pauseDuration)
+    {
+        playerController.SetInputBlocked(true);
+
+        // Начинаем затемнение
+        yield return StartCoroutine(FadeOutEffect());
+
+        // Небольшая пауза, пока экран затемнён
+        yield return new WaitForSeconds(pauseDuration);
+
+        // Добавить звуки
+
+        // Затем начинаем осветление
+        yield return StartCoroutine(FadeInEffect());
+        
+        playerController.SetInputBlocked(false);
     }
 }

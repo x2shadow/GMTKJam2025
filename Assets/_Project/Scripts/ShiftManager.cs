@@ -15,7 +15,8 @@ public class ShiftManager : MonoBehaviour
     public static event Action OnModuleDelivered;
     public static event Action OnShiftCompleted;
     public static event Action OnNewShiftStarted;
-    
+    public static event Action OnLastShiftStarted;
+
     private void OnEnable()
     {
         OnModuleDelivered += HandleModuleDelivered;
@@ -51,6 +52,8 @@ public class ShiftManager : MonoBehaviour
         else
         {
             // Конец игры
+            OnLastShiftStarted?.Invoke();
+            Debug.Log("Последняя смена...");
         }
     }
 }

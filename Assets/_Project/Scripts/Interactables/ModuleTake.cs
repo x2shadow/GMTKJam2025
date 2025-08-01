@@ -5,6 +5,7 @@ public class ModuleTake : MonoBehaviour, IInteractable
     [Header("Ссылки")]
     [Tooltip("UI-подсказка 'Взять модуль'")]
     public GameObject promptUI;
+    public ShiftManager shiftManager;
 
     [Tooltip("Слот в камере, в который нужно поместить модуль")]
     public Transform slot;
@@ -25,7 +26,7 @@ public class ModuleTake : MonoBehaviour, IInteractable
     private void OnTriggerEnter(Collider other)
     {
         // Ждём, что PlayerInteraction или PlayerController пометит его как игрока
-        if (hasModule) return;
+        if (shiftManager.modulesDelivered == 3 || hasModule) return;
         if (other.GetComponent<PlayerController>() != null)
         {
             inRange = true;
@@ -47,7 +48,7 @@ public class ModuleTake : MonoBehaviour, IInteractable
     // Этот метод будет вызван извне, когда игрок нажмёт E
     public void Interact(PlayerController player)
     {
-        if (!inRange || hasModule)
+        if (shiftManager.modulesDelivered == 3 || hasModule)
             return;
 
         hasModule = true;

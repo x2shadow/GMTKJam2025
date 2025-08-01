@@ -55,7 +55,8 @@ public class ModuleTake : MonoBehaviour, IInteractable
         Debug.Log("Модуль взят!");
 
         // Прикрепляем к слоту
-        module.SetParent(slot, worldPositionStays: false);
+        var desiredSize = Vector3.one * 0.2f;
+        module.transform.SetParentWithWorldScale(slot, desiredSize, worldPositionStays: true);
         module.localPosition = Vector3.zero;
         module.localRotation = Quaternion.identity;
 

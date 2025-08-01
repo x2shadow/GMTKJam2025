@@ -63,9 +63,11 @@ public class Table : MonoBehaviour, IInteractable
             Debug.Log("Модуль на столе!");
 
             // Прикрепляем к слоту
-            module.transform.SetParent(tableSlot, worldPositionStays: true);
+            var desiredSize = Vector3.one * 0.2f;
+            module.transform.SetParentWithWorldScale(tableSlot, desiredSize, worldPositionStays: true);
             module.transform.localPosition = Vector3.zero;
             module.transform.localRotation = Quaternion.identity;
+            //module.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         }
         else if (module?.CurrentState == ModuleController.State.ChipTaken)
         {

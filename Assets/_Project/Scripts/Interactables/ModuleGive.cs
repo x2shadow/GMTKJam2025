@@ -17,6 +17,10 @@ public class ModuleGive : MonoBehaviour, IInteractable
     private bool inRange = false;
     private bool hasModule = false;
 
+    public ModuleTake moduleTake;
+    public Table table;
+    public ChipTake chipTake;
+
     private void Awake()
     {
         // Прячем подсказку сразу
@@ -67,6 +71,17 @@ public class ModuleGive : MonoBehaviour, IInteractable
         chip.localRotation = Quaternion.identity;
 
         // Сообщаем игроку, что теперь он не держит модуль
+        player.HeldModule.CurrentState = ModuleController.State.InHand;
         player.HeldModule = null;
+
+        // Делаем ресет модулей
+        moduleTake.Reset();
+        table.Reset();
+        chipTake.Reset();
+    }
+
+    public void Reset()
+    {
+        hasModule = false;
     }
 }

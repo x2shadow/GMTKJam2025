@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class ChipTake : MonoBehaviour, IInteractable
 {
@@ -16,7 +17,7 @@ public class ChipTake : MonoBehaviour, IInteractable
     private bool hasModule = false;
 
     private void OnTriggerEnter(Collider other) { if (promptUI != null && !hasModule) promptUI.SetActive(true); }
-    private void OnTriggerExit(Collider other)  { if (promptUI != null) promptUI.SetActive(false); }
+    private void OnTriggerExit(Collider other) { if (promptUI != null) promptUI.SetActive(false); }
 
     public void Interact(PlayerController player)
     {
@@ -31,5 +32,10 @@ public class ChipTake : MonoBehaviour, IInteractable
         chip.SetParent(slot, worldPositionStays: true);
         chip.localPosition = Vector3.zero;
         chip.transform.localRotation = Quaternion.identity;
+    }
+
+    public void Reset()
+    {
+        hasModule = false;
     }
 }

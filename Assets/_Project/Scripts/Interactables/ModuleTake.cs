@@ -62,4 +62,9 @@ public class ModuleTake : MonoBehaviour, IInteractable
         // Сообщаем игроку, что теперь он держит модуль
         player.HeldModule = module.GetComponent<ModuleController>();
     }
+
+    public void Reset()
+    {
+        hasModule = false;   
+    }
 }

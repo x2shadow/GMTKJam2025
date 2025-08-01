@@ -15,10 +15,12 @@ public class Table : MonoBehaviour, IInteractable
     [Tooltip("Сам объект модуля, который лежит рядом и должен быть взят")]
     public Transform chip;
 
+    public ModuleGive moduleGive;
+
     private bool hasModule = false;
 
     private void OnTriggerEnter(Collider other) { if (promptUI != null && !hasModule) promptUI.SetActive(true); }
-    private void OnTriggerExit(Collider other)  { if (promptUI != null) promptUI.SetActive(false); }
+    private void OnTriggerExit(Collider other) { if (promptUI != null) promptUI.SetActive(false); }
 
     public void Interact(PlayerController player)
     {
@@ -28,7 +30,7 @@ public class Table : MonoBehaviour, IInteractable
         {
             module?.PlaceOnTable();
 
-            hasModule = true;
+            //hasModule = true;
             promptUI?.SetActive(false);
             Debug.Log("Модуль на столе!");
 
@@ -41,7 +43,7 @@ public class Table : MonoBehaviour, IInteractable
         {
             module?.InsertChip();
 
-            hasModule = true;
+            //hasModule = true;
             promptUI?.SetActive(false);
             Debug.Log("Чип вставлен!");
 
@@ -62,6 +64,14 @@ public class Table : MonoBehaviour, IInteractable
             module.transform.SetParent(playerSlot, worldPositionStays: true);
             module.transform.localPosition = Vector3.zero;
             module.transform.localRotation = Quaternion.identity;
+
+            // Открываем окно сдачи модулей
+            moduleGive.Reset();
         }
+    }
+    
+    public void Reset()
+    {
+        hasModule = false;   
     }
 }

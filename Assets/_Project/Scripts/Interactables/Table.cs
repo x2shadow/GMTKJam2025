@@ -8,7 +8,12 @@ public class Table : MonoBehaviour, IInteractable
     public GameObject promptUI;
 
     [Tooltip("Слот в камере, в который нужно поместить модуль")]
-    public Transform slot;
+    public Transform tableSlot;
+    public Transform playerSlot;
+
+
+    [Tooltip("Сам объект модуля, который лежит рядом и должен быть взят")]
+    public Transform chip;
 
     private bool hasModule = false;
 
@@ -18,15 +23,45 @@ public class Table : MonoBehaviour, IInteractable
     public void Interact(PlayerController player)
     {
         var module = player.HeldModule;
-        module?.PlaceOnTable();
 
-        hasModule = true;
-        promptUI?.SetActive(false);
-        Debug.Log("Модуль на столе!");
+        if (module?.CurrentState == ModuleController.State.InHand)
+        {
+            module?.PlaceOnTable();
 
-        // Прикрепляем к слоту
-        module.transform.SetParent(slot, worldPositionStays: true);
-        module.transform.localPosition = Vector3.zero;
-        module.transform.localRotation = Quaternion.identity;
+            hasModule = true;
+            promptUI?.SetActive(false);
+            Debug.Log("Модуль на столе!");
+
+            // Прикрепляем к слоту
+            module.transform.SetParent(tableSlot, worldPositionStays: true);
+            module.transform.localPosition = Vector3.zero;
+            module.transform.localRotation = Quaternion.identity;
+        }
+        else if (module?.CurrentState == ModuleController.State.ChipTaken)
+        {
+            module?.InsertChip();
+
+            hasModule = true;
+            promptUI?.SetActive(false);
+            Debug.Log("Чип вставлен!");
+
+            // Прикрепляем к слоту
+            chip.SetParent(module.slot, worldPositionStays: true);
+            chip.localPosition = Vector3.zero;
+            chip.localRotation = Quaternion.identity;
+        }
+        else if (module?.CurrentState == ModuleController.State.ChipInserted)
+        {
+            module?.CompleteWiring();
+
+            hasModule = true;
+            promptUI?.SetActive(false);
+            Debug.Log("Модуль готов!");
+
+            // Прикрепляем к слоту
+            module.transform.SetParent(playerSlot, worldPositionStays: true);
+            module.transform.localPosition = Vector3.zero;
+            module.transform.localRotation = Quaternion.identity;
+        }
     }
 }

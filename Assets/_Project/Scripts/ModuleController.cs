@@ -8,6 +8,9 @@ public class ModuleController : MonoBehaviour
     public enum State { InHand, PlacedOnTable, ChipTaken, ChipInserted, WiringDone }
     public State CurrentState { get; set; } = State.InHand;
 
+    [Tooltip("Слот в камере, в который нужно поместить модуль")]
+    public Transform slot;
+
     public static event Action<ModuleController> OnModuleReadyForDelivery;
 
     public void PlaceOnTable()

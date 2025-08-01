@@ -23,6 +23,14 @@ public class ShiftManager : MonoBehaviour
     public DialogueScript dialogue3;
     public GameObject     dialogueTrigger4;
     public DialogueScript dialogue5;
+    public DialogueScript dialogue6;
+    public DialogueScript dialogue7;
+    public DialogueScript dialogue8;
+
+    [Header("Ссылки 4й смены")]
+    public GameObject oldOne;
+    public Transform  oldOneDoor;
+    public Transform  oldOneDoorOpenPlace;
 
     private void OnEnable()
     {
@@ -63,6 +71,18 @@ public class ShiftManager : MonoBehaviour
         {
             dialogueRunner.StartDialogue(dialogue5, 0);
         }
+        else if (currentShift == 3 && modulesDelivered == 1)
+        {
+            dialogueRunner.StartDialogue(dialogue6, 0);
+        }
+        else if (currentShift == 3 && modulesDelivered == 2)
+        {
+            dialogueRunner.StartDialogue(dialogue7, 0);
+        }
+        else if (currentShift == 3 && modulesDelivered == 3)
+        {
+            dialogueRunner.StartDialogue(dialogue8, 0);
+        }
     }
 
     public void CompleteShift()
@@ -80,6 +100,8 @@ public class ShiftManager : MonoBehaviour
             // Конец игры
             OnLastShiftStarted?.Invoke();
             Debug.Log("Последняя смена...");
+            Destroy(oldOne);
+            oldOneDoor.position = oldOneDoorOpenPlace.position;
         }
     }
 }

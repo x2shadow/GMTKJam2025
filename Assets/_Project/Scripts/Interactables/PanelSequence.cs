@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PanelSequence : MonoBehaviour, IInteractable
@@ -94,7 +95,8 @@ public class PanelSequence : MonoBehaviour, IInteractable
         yield return FadeToBlack(0.1f);
 
         // 8. Появление надписи REPLACEMENT
-        replacementText.gameObject.SetActive(true);
+        //replacementText.gameObject.SetActive(true);
+        SceneManager.LoadScene("Credits");
     }
 
     private IEnumerator RotateTowards(Transform target)

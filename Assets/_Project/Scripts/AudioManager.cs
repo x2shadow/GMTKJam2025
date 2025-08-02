@@ -7,8 +7,8 @@ public class AudioManager : MonoBehaviour
 
     [Header("Настройки фоновой музыки")]
     public AudioSource bgMusic;
-    public AudioClip placebo;
-    public AudioClip ambient;
+    public AudioClip ambient1;
+    public AudioClip ambient2;
     public float fadeDuration = 3f;
 
     private void Awake()
@@ -42,17 +42,17 @@ public class AudioManager : MonoBehaviour
         bgMusic.volume = 0f;
     }
 
-    public void PlayPlacebo()
+    public void PlayAmbient1()
     {
         bgMusic.volume = 0.1f;
-        bgMusic.clip = placebo;
+        bgMusic.clip = ambient1;
         bgMusic.Play();
     }
 
-    public void PlayAmbient()
+    public void PlayAmbient2()
     {
         bgMusic.volume = 0.1f;
-        bgMusic.clip = ambient;
+        bgMusic.clip = ambient2;
         bgMusic.Play();
     }
 }

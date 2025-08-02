@@ -5,6 +5,7 @@ public class ModuleGive : MonoBehaviour, IInteractable
     [Header("Ссылки")]
     [Tooltip("UI-подсказка 'Взять модуль'")]
     public GameObject promptUI;
+    public AudioSource audioSource;
 
     [Tooltip("Слот в камере, в который нужно поместить модуль")]
     public Transform moduleTakeSlot;
@@ -72,6 +73,9 @@ public class ModuleGive : MonoBehaviour, IInteractable
 
         // Триггерим событие сдачи
         ShiftManager.NotifyModuleDelivered();
+
+        // Проигрываем звук двери?
+        audioSource.Play();
 
         // Делаем ресет модулей
         moduleTake.Reset();

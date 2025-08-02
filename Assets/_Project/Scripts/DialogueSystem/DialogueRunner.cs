@@ -27,6 +27,13 @@ public class DialogueRunner : MonoBehaviour
         StartCoroutine(RunDialogue2(script, player, index));
     }
 
+    public IEnumerator StartDialogueCoroutine(DialogueScript script, int index)
+    {
+        player.isDialogueActive = true;
+        player.inputActions.Player.Click.performed += OnClick;
+        yield return RunDialogue2(script, player, index);
+    }
+
     private IEnumerator RunDialogue(DialogueScript script, PlayerController player, int index)
     {
         foreach (var line in script.lines)

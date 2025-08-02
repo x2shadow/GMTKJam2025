@@ -6,7 +6,9 @@ public class PanelSequence : MonoBehaviour, IInteractable
 {
     [Header("Ссылки")]
     public GameObject promptUI;
+    public GameObject newOne;
     public Transform playerTransform;
+    public Transform cameraTransform;
     public PlayerController playerController;
     public Transform targetPosition; // Куда подъезжает игрок
     public Transform lookAtNote;
@@ -65,20 +67,24 @@ public class PanelSequence : MonoBehaviour, IInteractable
 
         // 1. Поворот к записке
         yield return RotateTowards(lookAtNote);
+        yield return RotateCameraTowards(lookAtNote);
 
         // 2. Диалог 9
         yield return dialogueRunner.StartDialogueCoroutine(dialogueNote, 0);
         playerController.SetInputBlocked(true);
 
         // 3. Поворот к монитору
-        yield return RotateTowards(lookAtMonitor);
+        yield return RotateCameraTowards(lookAtMonitor);
 
         // 4. Диалог 10
         yield return dialogueRunner.StartDialogueCoroutine(dialogueMonitor, 0);
         playerController.SetInputBlocked(true);
 
+        // Звук двери и шагов
+        newOne.SetActive(true);
+
         // 5. Поворот к новичку
-        yield return RotateTowards(lookAtNovice);
+        yield return RotateCameraTowards(lookAtNovice);
 
         // 6. Диалог 11
         yield return dialogueRunner.StartDialogueCoroutine(dialogueNovice, 0);
@@ -93,16 +99,43 @@ public class PanelSequence : MonoBehaviour, IInteractable
 
     private IEnumerator RotateTowards(Transform target)
     {
-        Quaternion startRot = playerTransform.rotation;
+        // Поворот тела игрока по горизонтали
         Vector3 dir = (target.position - playerTransform.position).normalized;
-        Quaternion endRot = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
-        float t = 0;
+        dir.y = 0; // только горизонтальная составляющая
+        Quaternion startRot = playerTransform.rotation;
+        Quaternion endRot = Quaternion.LookRotation(dir);
 
+        float t = 0f;
         while (t < rotateDuration)
         {
             t += Time.deltaTime;
             float lerpT = Mathf.Clamp01(t / rotateDuration);
             playerTransform.rotation = Quaternion.Slerp(startRot, endRot, lerpT);
+            yield return null;
+        }
+
+        // Поворот камеры по вертикали (вверх/вниз)
+        yield return StartCoroutine(RotateCameraTowards(target));
+    }
+
+    private IEnumerator RotateCameraTowards(Transform target)
+    {
+        Vector3 dirToTarget = (target.position - cameraTransform.position).normalized;
+        Quaternion startRot = cameraTransform.rotation;
+
+        // Создаём временный объект, чтобы вычислить правильный "смотрящий" поворот
+        GameObject dummy = new GameObject("LookTargetDummy");
+        dummy.transform.position = cameraTransform.position;
+        dummy.transform.LookAt(target); // Поворачиваем его точно как надо
+        Quaternion endRot = dummy.transform.rotation;
+        Destroy(dummy); // Больше не нужен
+
+        float t = 0f;
+        while (t < rotateDuration)
+        {
+            t += Time.deltaTime;
+            float lerpT = Mathf.Clamp01(t / rotateDuration);
+            cameraTransform.rotation = Quaternion.Slerp(startRot, endRot, lerpT);
             yield return null;
         }
     }

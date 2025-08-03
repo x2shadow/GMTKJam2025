@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Dialogue9
   m_EditorClassIdentifier: 
   lines:
-  - speaker: 1
+  - speaker: 2
     text: 'Torn note:'
     duration: 0
-  - speaker: 1
+  - speaker: 2
     text: "\u201CNot modules... Consciousness trapped inside... The System learns
       through our pain. Can\u2019t let it finish...\u201D"
     duration: 0

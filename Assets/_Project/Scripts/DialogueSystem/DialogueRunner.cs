@@ -6,8 +6,12 @@ public class DialogueRunner : MonoBehaviour
 {
     public DialogueScriptUI playerUI;
     public DialogueScriptUI oldOneUI;
+    public DialogueScriptUI noteUI;
 
     public PlayerController player;
+
+    public AudioSource audioSource;
+    public AudioClip oldOneVoiceClip;
     
     bool skipPressed = false;
 
@@ -58,17 +62,23 @@ public class DialogueRunner : MonoBehaviour
         {
             // Сброс флага перед каждой репликой
             skipPressed = false;
-            
+
             if (line.speaker == DialogueLine.Speaker.Player)
                 playerUI.Show(line.text);
+            else if (line.speaker == DialogueLine.Speaker.Note)
+                noteUI.Show(line.text);
             else
+            {
                 oldOneUI.Show(line.text);
+                audioSource.Play();
+            }
 
             // Вместо ожидания по времени ждём нажатия ЛКМ (Skip)
             yield return new WaitUntil(() => skipPressed);
             
             playerUI.Hide();
             oldOneUI.Hide();
+            noteUI.Hide();
         }
 
         // Отписываемся от события Click после завершения диалога

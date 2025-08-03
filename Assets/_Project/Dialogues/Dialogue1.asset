@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dialogue1
   m_EditorClassIdentifier: 
   lines:
-  - speaker: 1
+  - speaker: 2
     text: "Welcome. Looks like your first shift. Get inside. Settle in.\r"
     duration: 0
   - speaker: 1

@@ -14,6 +14,20 @@ public class FadeIn : MonoBehaviour
 
     public PlayerController playerController;
 
+    [Header("After Third Shift Sounds")]
+    [Tooltip("Тяжело открывается дверь")]
+    public AudioClip doorOpenClip;
+    [Tooltip("Резкий электрический треск")]
+    public AudioClip electricCrackClip;
+    [Tooltip("Взрывной крик")]
+    public AudioClip screamClip;
+    [Tooltip("Тяжёлый мешок тащат по полу")]
+    public AudioClip bagDragClip;
+    [Tooltip("Тяжело закрывается дверь")]
+    public AudioClip doorCloseClip;
+
+    public AudioSource audioSource;
+
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -92,13 +106,38 @@ public class FadeIn : MonoBehaviour
     {
         playerController.SetInputBlocked(true);
 
+        // Завершаем первый эмбиент
+        AudioManager.Instance.FadeOut();
+
         // Начинаем затемнение
         yield return StartCoroutine(FadeOutEffect());
 
-        // Небольшая пауза, пока экран затемнён
-        yield return new WaitForSeconds(pauseDuration);
+        // Тяжело открывается дверь
+        audioSource.PlayOneShot(doorOpenClip);
+        yield return new WaitForSeconds(doorOpenClip.length);
 
-        // Добавить звуки
+        /*
+        // Резкий, оглушительный ЭЛЕКТРИЧЕСКИЙ ТРЕСК (как короткое замыкание или разряд)
+        audioSource.PlayOneShot(electricCrackClip);
+        yield return new WaitForSeconds(electricCrackClip.length);
+
+        // Взрывной крик
+        audioSource.PlayOneShot(screamClip);
+        yield return new WaitForSeconds(screamClip.length);
+
+        // Тяжёлый мешок тащат по полу
+        audioSource.PlayOneShot(bagDragClip);
+        yield return new WaitForSeconds(bagDragClip.length);
+
+        // Тяжело закрывается дверь
+        audioSource.PlayOneShot(doorCloseClip);
+        yield return new WaitForSeconds(doorCloseClip.length);
+
+        // Тишина несколько секунд
+        yield return new WaitForSeconds(2f);
+        */
+        // Стартуем второй эмбиент
+        AudioManager.Instance.PlayAmbient2();
 
         // Затем начинаем осветление
         yield return StartCoroutine(FadeInEffect());

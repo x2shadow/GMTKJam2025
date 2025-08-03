@@ -27,6 +27,16 @@ public class PanelSequence : MonoBehaviour, IInteractable
     public float moveDuration = 1.5f;
     public float rotateDuration = 1f;
 
+    [Header("Last Scene Sounds")]
+    [Tooltip("Тяжело открывается дверь")]
+    public AudioClip doorOpenClip;
+    [Tooltip("Тяжело закрывается дверь")]
+    public AudioClip doorCloseClip;
+    [Tooltip("Шаги новичка")]
+    public AudioClip NewOneEnterClip;
+
+    public AudioSource audioSource;
+
     private bool wasUsed = false;
 
     private void OnTriggerEnter(Collider other)
@@ -74,18 +84,32 @@ public class PanelSequence : MonoBehaviour, IInteractable
         yield return dialogueRunner.StartDialogueCoroutine(dialogueNote, 0);
         playerController.SetInputBlocked(true);
 
+        // Пауза
+        yield return new WaitForSeconds(0.5f);
+
         // 3. Поворот к монитору
         yield return RotateCameraTowards(lookAtMonitor);
+        yield return new WaitForSeconds(1.5f);
 
         // 4. Диалог 10
         yield return dialogueRunner.StartDialogueCoroutine(dialogueMonitor, 0);
         playerController.SetInputBlocked(true);
 
-        // Звук двери и шагов
+        // Входит новичок
         newOne.SetActive(true);
+        // Звук открытия двери
+        audioSource.PlayOneShot(doorOpenClip);
+        yield return new WaitForSeconds(doorCloseClip.length);
+        // Тяжело закрывается дверь
+        audioSource.PlayOneShot(doorCloseClip);
+        yield return new WaitForSeconds(doorCloseClip.length);
+        // Звук шагов
+        audioSource.PlayOneShot(NewOneEnterClip);
+        yield return new WaitForSeconds(NewOneEnterClip.length);
 
         // 5. Поворот к новичку
         yield return RotateCameraTowards(lookAtNovice);
+        yield return new WaitForSeconds(1.5f);
 
         // 6. Диалог 11
         yield return dialogueRunner.StartDialogueCoroutine(dialogueNovice, 0);

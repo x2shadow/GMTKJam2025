@@ -37,7 +37,7 @@ public class FadeOut : MonoBehaviour
         AudioManager.Instance.FadeOut();
         yield return new WaitForSeconds(3f); // Audio FadeOut duration
         StartCoroutine(FadeOutEffect());
-        AudioManager.Instance.PlayAmbient2();
+        //AudioManager.Instance.PlayAmbient2();
     }
 
 

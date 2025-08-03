@@ -51,7 +51,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayAmbient2()
     {
-        bgMusic.volume = 0.1f;
+        bgMusic.volume = 0.35f;
         bgMusic.clip = ambient2;
         bgMusic.Play();
     }

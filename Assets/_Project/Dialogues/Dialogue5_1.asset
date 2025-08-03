@@ -23,5 +23,5 @@ MonoBehaviour:
     text: "Work. One more module. Finish it \u2014 you\u2019re done."
     duration: 0
   - speaker: 1
-    text: "I\u2019d\u2026 like to close my eyes for a minute too.\r"
+    text: "I\u2019d... like to close my eyes for a minute too.\r"
     duration: 0

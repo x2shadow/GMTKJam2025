@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
             dialogueTarget = null;
             nextPartTrigger1.SetActive(true);
             //effectController.TriggerHitEffects();
-            AudioManager.Instance.PlayAmbient1();
+            //AudioManager.Instance.PlayAmbient1();
         }
 
         if (index == 3)

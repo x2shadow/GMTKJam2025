@@ -1033,7 +1033,8 @@ MonoBehaviour:
   dialogue2: {fileID: 11400000, guid: 2b2f88bb8ec82494a9fa3f98e365742d, type: 2}
   dialogue3: {fileID: 11400000, guid: 27cb0168c73156c4d83ecd7f0e060361, type: 2}
   dialogueTrigger4: {fileID: 1513114147}
-  dialogue5: {fileID: 11400000, guid: 168ff74f8e987b643b32ec4b549ddd22, type: 2}
+  dialogue5_1: {fileID: 11400000, guid: 168ff74f8e987b643b32ec4b549ddd22, type: 2}
+  dialogue5_2: {fileID: 11400000, guid: 114ee4730ba559f45af54e695003c7b0, type: 2}
   dialogue6: {fileID: 11400000, guid: 6ec4f07d593db354092cc35b6dec26ca, type: 2}
   dialogue7: {fileID: 11400000, guid: c966f95b5a28a854bb0b35570525438c, type: 2}
   dialogue8: {fileID: 11400000, guid: a28a772adc79e9347955fea49ab0d38d, type: 2}

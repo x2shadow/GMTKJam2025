@@ -22,7 +22,8 @@ public class ShiftManager : MonoBehaviour
     public DialogueScript dialogue2;
     public DialogueScript dialogue3;
     public GameObject     dialogueTrigger4;
-    public DialogueScript dialogue5;
+    public DialogueScript dialogue5_1;
+    public DialogueScript dialogue5_2;
     public DialogueScript dialogue6;
     public DialogueScript dialogue7;
     public DialogueScript dialogue8;
@@ -69,7 +70,11 @@ public class ShiftManager : MonoBehaviour
         }
         else if (currentShift == 2 && modulesDelivered == 2)
         {
-            dialogueRunner.StartDialogue(dialogue5, 0);
+            dialogueRunner.StartDialogue(dialogue5_1, 0);
+        }
+        else if (currentShift == 2 && modulesDelivered == 3)
+        {
+            dialogueRunner.StartDialogue(dialogue5_2, 0);
         }
         else if (currentShift == 3 && modulesDelivered == 1)
         {

@@ -17,6 +17,8 @@ public class ShiftManager : MonoBehaviour
     public static event Action OnNewShiftStarted;
     public static event Action OnLastShiftStarted;
 
+    public GameObject LampLight;
+
     [Header("Ссылки для запуска диалогов")]
     public DialogueRunner dialogueRunner;
     public DialogueScript dialogue2;
@@ -54,6 +56,7 @@ public class ShiftManager : MonoBehaviour
         if (modulesDelivered >= modulesPerShift)
         {
             OnShiftCompleted?.Invoke();
+            LampLight.SetActive(true);
         }
 
         HandleStory();
@@ -99,6 +102,7 @@ public class ShiftManager : MonoBehaviour
             modulesDelivered = 0;
             if (currentShift == 2) dialogueTrigger4.SetActive(true);
             OnNewShiftStarted?.Invoke();
+            LampLight.SetActive(false);
             // Тут можно показать UI «Смена X началась»
         }
         else
@@ -106,6 +110,7 @@ public class ShiftManager : MonoBehaviour
             // Конец игры
             OnLastShiftStarted?.Invoke();
             Debug.Log("Последняя смена...");
+            LampLight.SetActive(false);
             Destroy(oldOne);
             oldOneDoor.position = oldOneDoorOpenPlace.position;
             exitDoor.GetComponent<BoxCollider>().enabled = false;

@@ -7,7 +7,8 @@ public class FadeIn : MonoBehaviour
     CanvasGroup canvasGroup;
 
     [Tooltip("Скорость затухания (секунд)")]
-    public float fadeDuration = 1f;
+    public float fadeInDuration = 2f;
+    public float fadeoutDuration = 1f;
     public float pauseDuration = 2f;
 
     public bool startFadeIn = true;
@@ -27,6 +28,14 @@ public class FadeIn : MonoBehaviour
     [Tooltip("Тяжело закрывается дверь")]
     public AudioClip doorCloseClip;
 
+    [Header("Надписи смен")]
+    public ShiftManager shiftManager;
+    public GameObject shift1;
+    public GameObject shift2;
+    public GameObject shift3;
+    public GameObject shiftX;
+
+    public AudioClip shiftChangeClip;
     public AudioSource audioSource;
 
     private void Awake()
@@ -49,11 +58,19 @@ public class FadeIn : MonoBehaviour
 
     private IEnumerator FadeInEffect()
     {
+        if (shiftManager.currentShift == 1)
+        { 
+            shift1.SetActive(true);
+            audioSource.PlayOneShot(shiftChangeClip);
+            yield return new WaitForSeconds(2f);
+            shift1.SetActive(false);
+        }
+
         float timer = 0f;
-        while (timer < fadeDuration)
+        while (timer < fadeInDuration)
         {
             timer += Time.deltaTime;
-            canvasGroup.alpha = 1f - Mathf.Clamp01(timer / fadeDuration);
+            canvasGroup.alpha = 1f - Mathf.Clamp01(timer / fadeInDuration);
             yield return null;
         }
         canvasGroup.alpha = 0f;
@@ -68,10 +85,10 @@ public class FadeIn : MonoBehaviour
     private IEnumerator FadeOutEffect()
     {
         float timer = 0f;
-        while (timer < fadeDuration)
+        while (timer < fadeoutDuration)
         {
             timer += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Clamp01(timer / fadeDuration);
+            canvasGroup.alpha = Mathf.Clamp01(timer / fadeoutDuration);
             yield return null;
         }
         canvasGroup.alpha = 1f;
@@ -89,13 +106,22 @@ public class FadeIn : MonoBehaviour
         // Начинаем затемнение
         yield return StartCoroutine(FadeOutEffect());
 
+        if (shiftManager.currentShift == 2) shift2.SetActive(true);
+        if (shiftManager.currentShift == 3) shift3.SetActive(true);
+        audioSource.PlayOneShot(shiftChangeClip);
+
         // Небольшая пауза, пока экран затемнён
         yield return new WaitForSeconds(pauseDuration / 2f);
+
 
         // Костыль, чтобы повернуть игрока
         playerController.isDialogueActive = true;
         playerController.RotateTowardsDialogueTarget();
         yield return new WaitForSeconds(pauseDuration / 2f);
+
+        if (shiftManager.currentShift == 2) shift2.SetActive(false);
+        if (shiftManager.currentShift == 3) shift3.SetActive(false);
+
 
         // Затем начинаем осветление
         yield return StartCoroutine(FadeInEffect());
@@ -117,6 +143,7 @@ public class FadeIn : MonoBehaviour
         yield return StartCoroutine(FadeOutEffect());
 
         // Пауза
+
         yield return new WaitForSeconds(2f);
 
         // Костыль, чтобы повернуть игрока
@@ -158,6 +185,12 @@ public class FadeIn : MonoBehaviour
         
         // Тишина несколько секунд
         yield return new WaitForSeconds(2f);
+
+        // Показываем надпись
+        shiftX.SetActive(true);
+        audioSource.PlayOneShot(shiftChangeClip);
+        yield return new WaitForSeconds(2f);
+        shiftX.SetActive(false);
 
 
         // Затем начинаем осветление

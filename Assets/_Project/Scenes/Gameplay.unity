@@ -1282,7 +1282,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -4607,9 +4607,9 @@ MonoBehaviour:
   dialogueNovice: {fileID: 11400000, guid: 65710c58784a8ea47b9d2778630c2b56, type: 2}
   moveDuration: 1.5
   rotateDuration: 1
-  doorOpenClip: {fileID: 8300000, guid: ef97a4ca98a9ac9419829a56ea67148e, type: 3}
-  doorCloseClip: {fileID: 8300000, guid: ef97a4ca98a9ac9419829a56ea67148e, type: 3}
-  NewOneEnterClip: {fileID: 8300000, guid: ef97a4ca98a9ac9419829a56ea67148e, type: 3}
+  doorOpenClip: {fileID: 8300000, guid: e0e64d6eb5cf66a4ea02386aba9f8595, type: 3}
+  doorCloseClip: {fileID: 8300000, guid: 7e6764dbfee969a409270290d4ca2cf5, type: 3}
+  NewOneEnterClip: {fileID: 8300000, guid: b17db8fc0eae0ad449aad120a1e4c7dd, type: 3}
   audioSource: {fileID: 1247780284}
 --- !u!65 &1247780280
 BoxCollider:
@@ -5390,7 +5390,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

@@ -21,6 +21,7 @@ public class OldOneDoor : MonoBehaviour
         {
             Debug.Log("Вошел в триггер");
             audioSource.Play();
+            wasUsed = true;
             isMoving = true; // Запускаем движение двери
             isPlayerNearby = true;
         }

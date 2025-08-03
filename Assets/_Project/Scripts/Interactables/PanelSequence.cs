@@ -95,16 +95,21 @@ public class PanelSequence : MonoBehaviour, IInteractable
         yield return dialogueRunner.StartDialogueCoroutine(dialogueMonitor, 0);
         playerController.SetInputBlocked(true);
 
+        // Пауза
+        yield return new WaitForSeconds(0.5f);
+
         // Входит новичок
         newOne.SetActive(true);
         // Звук открытия двери
         audioSource.PlayOneShot(doorOpenClip);
         yield return new WaitForSeconds(doorCloseClip.length);
+        // Пауза
+        yield return new WaitForSeconds(0.5f);
         // Тяжело закрывается дверь
         audioSource.PlayOneShot(doorCloseClip);
         yield return new WaitForSeconds(doorCloseClip.length);
         // Звук шагов
-        audioSource.PlayOneShot(NewOneEnterClip);
+        audioSource.PlayOneShot(NewOneEnterClip, 0.7f);
         yield return new WaitForSeconds(NewOneEnterClip.length);
 
         // 5. Поворот к новичку

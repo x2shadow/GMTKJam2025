@@ -20,7 +20,7 @@ public class Table : MonoBehaviour, IInteractable
 
     private bool placedOnTable = false;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (promptUI == null) return;
         var player = other.GetComponent<PlayerController>();

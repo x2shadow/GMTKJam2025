@@ -156,28 +156,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   isFrameLimitEnabled:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   frameLimit:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 24
   aspectMode:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 3
   targetRasterizationResolutionWidth:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 256
   targetRasterizationResolutionHeight:
-    m_OverrideState: 0
-    m_Value: 224
+    m_OverrideState: 1
+    m_Value: 278
   isDepthBufferEnabled:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   isClearDepthAfterBackgroundEnabled:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   isClearDepthBeforeUIEnabled:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:

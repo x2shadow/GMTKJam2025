@@ -106,24 +106,33 @@ public class FadeIn : MonoBehaviour
     {
         playerController.SetInputBlocked(true);
 
-        // Завершаем первый эмбиент
-        AudioManager.Instance.FadeOut();
 
         // Начинаем затемнение
         yield return StartCoroutine(FadeOutEffect());
+
+        // Пауза
+        yield return new WaitForSeconds(2f);
 
         // Тяжело открывается дверь
         audioSource.PlayOneShot(doorOpenClip);
         yield return new WaitForSeconds(doorOpenClip.length);
 
-        /*
+        // Пауза
+        yield return new WaitForSeconds(1.5f);
+
         // Резкий, оглушительный ЭЛЕКТРИЧЕСКИЙ ТРЕСК (как короткое замыкание или разряд)
-        audioSource.PlayOneShot(electricCrackClip);
-        yield return new WaitForSeconds(electricCrackClip.length);
+        audioSource.PlayOneShot(electricCrackClip, 0.8f);
+        yield return new WaitForSeconds(electricCrackClip.length/2f);
 
         // Взрывной крик
         audioSource.PlayOneShot(screamClip);
         yield return new WaitForSeconds(screamClip.length);
+
+        // Пауза
+        yield return new WaitForSeconds(1.5f);
+
+        // Завершаем первый эмбиент
+        AudioManager.Instance.FadeOut();
 
         // Тяжёлый мешок тащат по полу
         audioSource.PlayOneShot(bagDragClip);
@@ -133,15 +142,17 @@ public class FadeIn : MonoBehaviour
         audioSource.PlayOneShot(doorCloseClip);
         yield return new WaitForSeconds(doorCloseClip.length);
 
-        // Тишина несколько секунд
-        yield return new WaitForSeconds(2f);
-        */
         // Стартуем второй эмбиент
         AudioManager.Instance.PlayAmbient2();
+        
+        // Тишина несколько секунд
+        yield return new WaitForSeconds(2f);
+
 
         // Затем начинаем осветление
         yield return StartCoroutine(FadeInEffect());
-        
+
+        playerController.moveSpeed = 1.5f;
         playerController.SetInputBlocked(false);
     }
 }

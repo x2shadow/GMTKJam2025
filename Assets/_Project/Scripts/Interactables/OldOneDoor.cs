@@ -5,6 +5,8 @@ public class OldOneDoor : MonoBehaviour
     [Header("Ссылки")]
     public Transform doorLockedTarget; // Целевая позиция, куда поедет дверь
     public float moveSpeed = 2f;        // Скорость движения двери
+    public AudioSource audioSource;
+    public AudioClip doorCloseClip;
 
     private bool wasUsed = false;
     private bool isMoving = false;
@@ -18,6 +20,7 @@ public class OldOneDoor : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Вошел в триггер");
+            audioSource.Play();
             isMoving = true; // Запускаем движение двери
             isPlayerNearby = true;
         }

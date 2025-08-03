@@ -32,6 +32,7 @@ public class ShiftManager : MonoBehaviour
     public GameObject oldOne;
     public Transform  oldOneDoor;
     public Transform  oldOneDoorOpenPlace;
+    public GameObject   exitDoor;
 
     private void OnEnable()
     {
@@ -107,6 +108,7 @@ public class ShiftManager : MonoBehaviour
             Debug.Log("Последняя смена...");
             Destroy(oldOne);
             oldOneDoor.position = oldOneDoorOpenPlace.position;
+            exitDoor.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }

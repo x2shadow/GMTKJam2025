@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ public class PanelSequence : MonoBehaviour, IInteractable
     public Transform lookAtMonitor;
     public Transform lookAtNovice;
     public CanvasGroup fadeCanvasGroup; // Черный экран (UI), alpha = 0..1
-    public Text replacementText; // Надпись REPLACEMENT
+    public TextMeshProUGUI replacementText; // Надпись REPLACEMENT
 
     [Header("Диалоги")]
     public DialogueRunner dialogueRunner;
@@ -34,6 +35,7 @@ public class PanelSequence : MonoBehaviour, IInteractable
     public AudioClip doorCloseClip;
     [Tooltip("Шаги новичка")]
     public AudioClip NewOneEnterClip;
+    public AudioClip replacementClip;
 
     public AudioSource audioSource;
 
@@ -121,10 +123,12 @@ public class PanelSequence : MonoBehaviour, IInteractable
         playerController.SetInputBlocked(true);
 
         // 7. Затемнение
+        audioSource.PlayOneShot(replacementClip);
         yield return FadeToBlack(0.1f);
 
         // 8. Появление надписи REPLACEMENT
-        //replacementText.gameObject.SetActive(true);
+        replacementText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(replacementClip.length);
         SceneManager.LoadScene("Credits");
     }
 

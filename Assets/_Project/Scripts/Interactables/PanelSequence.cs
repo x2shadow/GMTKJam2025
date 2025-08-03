@@ -123,7 +123,7 @@ public class PanelSequence : MonoBehaviour, IInteractable
         playerController.SetInputBlocked(true);
 
         // 7. Затемнение
-        audioSource.PlayOneShot(replacementClip);
+        audioSource.PlayOneShot(replacementClip, 0.75f);
         yield return FadeToBlack(0.1f);
 
         // 8. Появление надписи REPLACEMENT

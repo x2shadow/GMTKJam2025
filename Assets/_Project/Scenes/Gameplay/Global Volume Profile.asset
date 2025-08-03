@@ -142,6 +142,43 @@ MonoBehaviour:
   drawDistance:
     m_OverrideState: 1
     m_Value: 100
+--- !u!114 &-447871331996503829
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb00c03fccc953a4387732e1392ffcf8, type: 3}
+  m_Name: CameraVolume
+  m_EditorClassIdentifier: 
+  active: 1
+  isFrameLimitEnabled:
+    m_OverrideState: 0
+    m_Value: 0
+  frameLimit:
+    m_OverrideState: 0
+    m_Value: 24
+  aspectMode:
+    m_OverrideState: 0
+    m_Value: 3
+  targetRasterizationResolutionWidth:
+    m_OverrideState: 0
+    m_Value: 256
+  targetRasterizationResolutionHeight:
+    m_OverrideState: 0
+    m_Value: 224
+  isDepthBufferEnabled:
+    m_OverrideState: 0
+    m_Value: 1
+  isClearDepthAfterBackgroundEnabled:
+    m_OverrideState: 0
+    m_Value: 1
+  isClearDepthBeforeUIEnabled:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +196,7 @@ MonoBehaviour:
   - {fileID: -5884560528013903924}
   - {fileID: -3879488019978816015}
   - {fileID: -2292523958108677519}
+  - {fileID: -447871331996503829}
 --- !u!114 &633389205906043604
 MonoBehaviour:
   m_ObjectHideFlags: 3

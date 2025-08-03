@@ -1463,7 +1463,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Volume
+  m_text: Music volume (not sounds)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f7c6ce6e40e85b4982f215361be160e, type: 2}
   m_sharedMaterial: {fileID: -2926312881673439846, guid: 7f7c6ce6e40e85b4982f215361be160e, type: 2}

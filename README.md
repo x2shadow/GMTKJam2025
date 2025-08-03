@@ -1,4 +1,4 @@
-# GMTK Jam 2025
+# REPLACEMENT
 
 The game was made in 96 hours for **GMTK Jam 2025** on the theme "Loop"
 

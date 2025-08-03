@@ -20,6 +20,7 @@ public class Table : MonoBehaviour, IInteractable
 
     private bool placedOnTable = false;
 
+    // Было OnTriggerEnter, костыльное решение проверять каждый кадр через Stay
     private void OnTriggerStay(Collider other)
     {
         if (promptUI == null) return;

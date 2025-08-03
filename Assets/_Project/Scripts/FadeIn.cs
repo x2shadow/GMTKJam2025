@@ -13,6 +13,7 @@ public class FadeIn : MonoBehaviour
     public bool startFadeIn = true;
 
     public PlayerController playerController;
+    public Transform fourthShiftLookTarget;
 
     [Header("After Third Shift Sounds")]
     [Tooltip("Тяжело открывается дверь")]
@@ -89,11 +90,16 @@ public class FadeIn : MonoBehaviour
         yield return StartCoroutine(FadeOutEffect());
 
         // Небольшая пауза, пока экран затемнён
-        yield return new WaitForSeconds(pauseDuration);
+        yield return new WaitForSeconds(pauseDuration / 2f);
+
+        // Костыль, чтобы повернуть игрока
+        playerController.isDialogueActive = true;
+        playerController.RotateTowardsDialogueTarget();
+        yield return new WaitForSeconds(pauseDuration / 2f);
 
         // Затем начинаем осветление
         yield return StartCoroutine(FadeInEffect());
-
+        playerController.isDialogueActive = false;
         playerController.SetInputBlocked(false);
     }
 
@@ -112,6 +118,11 @@ public class FadeIn : MonoBehaviour
 
         // Пауза
         yield return new WaitForSeconds(2f);
+
+        // Костыль, чтобы повернуть игрока
+        playerController.isDialogueActive = true;
+        playerController.dialogueTarget = fourthShiftLookTarget;
+        playerController.RotateTowardsDialogueTarget();
 
         // Тяжело открывается дверь
         audioSource.PlayOneShot(doorOpenClip);
@@ -153,6 +164,7 @@ public class FadeIn : MonoBehaviour
         yield return StartCoroutine(FadeInEffect());
 
         playerController.moveSpeed = 1.5f;
+        playerController.isDialogueActive = false;
         playerController.SetInputBlocked(false);
     }
 }

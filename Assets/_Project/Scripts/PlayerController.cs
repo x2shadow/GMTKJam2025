@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void RotateTowardsDialogueTarget()
+    public void RotateTowardsDialogueTarget()
     {
         if (dialogueTarget == null) return;
 
